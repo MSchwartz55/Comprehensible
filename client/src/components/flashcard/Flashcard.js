@@ -10,7 +10,7 @@ const Flashcard = (props) => {
         const error = `${response.status} (${response.statusText})`;
         throw (error)
       }
-      const flashcardData = await response.json();
+      const flashcardData = await response.json(); x
       setData(flashcardData.flashcards)
     } catch (error) {
       console.error(error)

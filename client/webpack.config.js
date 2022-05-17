@@ -16,7 +16,7 @@ if (isDevelopment) {
     "react-dom": "@hot-loader/react-dom",
   };
 }
-// AIzaSyCCVLqpIh473ypIFnRYh6Z2-SB3frxJGf0
+
 module.exports = {
   entry: [...initialEntryPoints, path.join(__dirname, "./src/main.js")],
   context: path.resolve(__dirname),
