@@ -1,6 +1,7 @@
 @import "./foundation/settings";
 @import "~foundation-sites/scss/foundation";
 @include foundation-everything;
+
 // place global css here
 *,
 *::before,
@@ -11,4 +12,35 @@
 :root {
   -moz-tab-size: 4;
   tab-size: 4;
+}
+
+.container {
+  position: relative;
+  width: 560px;
+  height: 315px;
+}
+
+.subtitles {
+  position: absolute;
+  top: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .text {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    padding: 2px;
+  }
+}
+
+.flashcardList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
