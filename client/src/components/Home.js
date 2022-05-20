@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RandomFlashcard from "./flashcard/RandomFlashcard.js";
+import NewFlashcardForm from "./flashcard/NewFlashcardForm.js";
 
 const Home = (props) => {
   const [flashcardData, setFlashcardData] = useState([])
@@ -26,8 +27,11 @@ const Home = (props) => {
     const randomIndex = Math.floor(Math.random() * (flashcardData.length));
 
     return (
-      <div className="flashcardList">
-        <RandomFlashcard flashcardData={flashcardData} randomIndex={randomIndex} />
+      <div>
+        <div className="flashcardList">
+          <RandomFlashcard flashcardData={flashcardData} randomIndex={randomIndex} />
+        </div>
+        <NewFlashcardForm />
       </div>
     )
   }

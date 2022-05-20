@@ -1,9 +1,13 @@
 import React from "react";
 import getEmbedId from "../../services/getEmbedId.js";
 
-const YoutubeEmbed = ({ videoURL, videoStartTime, videoEndTime, subtitles }) => {
+const YoutubeEmbed = ({ videoURL, videoStartTime, videoEndTime, subtitles, personal }) => {
   const embedId = getEmbedId(videoURL);
-  const formattedSrc = `https://www.youtube.com/embed/${embedId}?start=${videoStartTime}&end=${videoEndTime}&rel=0&controls=0&autoplay=1`;
+
+  let formattedSrc = `https://www.youtube.com/embed/${embedId}?start=${videoStartTime}&end=${videoEndTime}&rel=0&controls=0&autoplay=1`;
+  if (personal) {
+    formattedSrc = `https://www.youtube.com/embed/${embedId}?start=${videoStartTime}&end=${videoEndTime}&rel=0&controls=0&autoplay=0`;
+  }
 
   const spanClass = subtitles ? "text" : null;
 

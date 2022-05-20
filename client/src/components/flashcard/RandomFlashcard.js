@@ -29,7 +29,7 @@ const RandomFlashcard = ({ randomIndex, flashcardData }) => {
   if (moreCards) {
     return (
       <div className="flashcardList">
-        <YoutubeEmbed {...currentFlashcard} />
+        <YoutubeEmbed {...currentFlashcard} personal={false} />
         <button onClick={handleClick}>Next Card</button>
       </div>
     )

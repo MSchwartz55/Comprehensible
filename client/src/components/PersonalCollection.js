@@ -24,7 +24,7 @@ const PersonalCollection = (props) => {
   })
 
   const personalCollection = collection.map((entry) => {
-    return <YoutubeEmbed {...entry.flashcard} />
+    return <YoutubeEmbed {...entry.flashcard} personal={true} />
   })
 
 
