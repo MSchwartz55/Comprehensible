@@ -12,6 +12,7 @@ const PersonalCollection = (props) => {
         throw (error)
       }
       const collectionData = await response.json();
+      console.log(collectionData.collection)
       setCollection(collectionData.collection)
     } catch (error) {
       console.error(error)
@@ -22,9 +23,10 @@ const PersonalCollection = (props) => {
     fetchPersonalCollection();
   })
 
-  const personalCollection = collection.map((flashcard) => {
-    return <YoutubeEmbed {...flashcard} />
+  const personalCollection = collection.map((entry) => {
+    return <YoutubeEmbed {...entry.flashcard} />
   })
+
 
   return (
     <div>

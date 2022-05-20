@@ -24,9 +24,10 @@ const Home = (props) => {
 
   if (flashcardData.length > 0) {
     const randomIndex = Math.floor(Math.random() * (flashcardData.length));
+
     return (
       <div className="flashcardList">
-        <RandomFlashcard {...flashcardData[randomIndex]} flashcardData={flashcardData} randomIndex={randomIndex} />
+        <RandomFlashcard flashcardData={flashcardData} randomIndex={randomIndex} />
       </div>
     )
   }
