@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import TimeHandler from "../../services/utility_classes/TimeHandler";
+import translateServerErrors from "../../services/translateServerErrors"
+import ErrorList from "../layout/ErrorList"
+import flashcardIsValid from "../../services/flashcardIsValid";
 
 const NewFlashcardForm = (props) => {
-  const [formValues, setFormValues] = useState({
+  const formSkeleton = {
     videoURL: "",
-    startTime: "0:00",
-    endTime: "0:00",
+    videoStartTime: "",
+    videoEndTime: "",
     transcript: "",
     subtitles: ""
-  })
-  const [flipped, setFlipped] = useState(false);
+  }
 
-  const postFormData = async () => {
+  const [formValues, setFormValues] = useState(formSkeleton);
+  const [flipped, setFlipped] = useState(false);
+  const [errors, setErrors] = useState([]);
+
+  const postFormData = async (formValues) => {
     try {
       const response = await fetch(`/api/v1/flashcards`, {
         method: "POST",
@@ -19,11 +25,18 @@ const NewFlashcardForm = (props) => {
         body: JSON.stringify(formValues)
       });
       if (!response.ok) {
-        const error = `${response.status} (${response.statusText})`;
-        throw (error)
+        if (response.status === 422) {
+          const body = await response.json();
+          setErrors(translateServerErrors(body.errors));
+        } else {
+          const error = `${response.status} (${response.statusText})`;
+          throw (error);
+        }
+      } else {
+        setErrors([]);
+        const body = await response.json();
+        props.setFlashcardData([...props.flashcardData, body.flashcard]);
       }
-      const flashcardData = await response.json();
-      setFlashcardData(flashcardData.flashcards)
     } catch (error) {
       console.error(error)
     }
@@ -34,18 +47,28 @@ const NewFlashcardForm = (props) => {
     const seconds = Math.max(0, TimeHandler.getSecondsFromHHMMSS(value));
 
     const time = TimeHandler.toHHMMSS(seconds);
-    setValue(time);
+    setFormValues({ ...formValues, [event.target.name]: time });
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
+    let formValuesClone = { ...formValues };
+    formValuesClone.videoStartTime = TimeHandler.getSecondsFromHHMMSS(formValuesClone.videoStartTime);
+    formValuesClone.videoEndTime = TimeHandler.getSecondsFromHHMMSS(formValuesClone.videoEndTime);
+
+    postFormData(formValuesClone)
+
+    if (flashcardIsValid(formValuesClone)) {
+      props.setRenderForm(false);
+    }
   }
 
   const handleChange = (event) => {
     setFormValues({ ...formValues, [event.target.name]: event.target.value });
   }
 
-  const toggleFlip = (event) => {
+  const toggleFlip = () => {
     if (flipped) {
       setFlipped(false);
     } else {
@@ -57,34 +80,73 @@ const NewFlashcardForm = (props) => {
     event.stopPropagation();
   }
 
+  const handleButtonClick = (event) => {
+    event.preventDefault();
+    props.setRenderForm(false);
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={"flashcardForm"}>
+      <ErrorList errors={errors} />
       <div className="flip-card" >
         <div className={flipped ? "flip-card-inner flipped" : "flip-card-inner"} onClick={toggleFlip}>
 
           <div className="flip-card-front">
-            <label htmlFor="url"></label>
-            <input type="text" name="videoURL" id="videoURL" value={formValues.videoURL} onChange={handleChange} onClick={handleChildClick} />
+            <label htmlFor="videoURL">
+              URL <input type="text"
+                name="videoURL" id="videoURL"
+                value={formValues.videoURL}
+                onChange={handleChange}
+                onClick={handleChildClick} />
+            </label>
 
-            <label htmlFor="startTime"></label>
-            <input type="text" name="startTime" id="startTime" value={formValues.startTime} onChange={handleChange} onBlur={onBlur} onClick={handleChildClick} />
+            <label htmlFor="videoStartTime">
+              Start <input type="text"
+                name="videoStartTime"
+                id="videoStartTime"
+                value={formValues.videoStartTime}
+                onChange={handleChange}
+                onBlur={onBlur}
+                onClick={handleChildClick} />
+            </label>
 
-            <label htmlFor="endTime"></label>
-            <input type="text" name="endTime" id="endTime" value={formValues.endTime} onChange={handleChange} onBlur={onBlur} onClick={handleChildClick} />
+            <label htmlFor="videoEndTime">
+              End <input type="text"
+                name="videoEndTime"
+                id="videoEndTime"
+                value={formValues.videoEndTime}
+                onChange={handleChange}
+                onBlur={onBlur}
+                onClick={handleChildClick} />
+            </label>
 
-            <label htmlFor="subtitles"></label>
-            <input type="text" name="subtitles" id="" value={formValues.subtitles} onChange={handleChange} onClick={handleChildClick} />
+            <label htmlFor="subtitles">
+              Subtitles <input type="text"
+                name="subtitles"
+                id="subtitles"
+                value={formValues.subtitles}
+                onChange={handleChange}
+                onClick={handleChildClick} />
+            </label>
           </div>
 
           <div className="flip-card-back">
-            <label htmlFor="transcript"></label>
-            <textarea name="transcript" id="transcript" cols="30" rows="10" value={formValues.transcript} onChange={handleChange} onClick={handleChildClick}></textarea>
+            <label htmlFor="transcript">
+              <textarea name="transcript"
+                id="transcript"
+                cols="30"
+                rows="10"
+                value={formValues.transcript}
+                onChange={handleChange}
+                onClick={handleChildClick}>
+              </textarea>
+            </label>
 
             <input type="submit" value="Submit" />
           </div>
-
         </div>
       </div>
+      <button onClick={handleButtonClick}>X</button>
     </form>
   )
 

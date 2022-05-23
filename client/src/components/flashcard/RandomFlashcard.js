@@ -9,7 +9,7 @@ const RandomFlashcard = ({ randomIndex, flashcardData }) => {
     return Math.floor(Math.random() * (flashcardData.length));
   }
 
-  const handleClick = () => {
+  const handleNextClick = () => {
     if (moreCards) {
       let newRandomIndex = getRandom();
       while (visitedIndexList.includes(newRandomIndex)) {
@@ -24,12 +24,17 @@ const RandomFlashcard = ({ randomIndex, flashcardData }) => {
     }
   }
 
+  const handleAddClick = () => {
+
+  }
+
   const currentFlashcard = flashcardData[visitedIndexList[visitedIndexList.length - 1]]
 
   if (moreCards) {
     return (
       <div className="flashcardList">
         <YoutubeEmbed {...currentFlashcard} personal={false} />
+        <button onClick={handleNextClick}>Next Card</button>
         <button onClick={handleClick}>Next Card</button>
       </div>
     )
