@@ -90,3 +90,14 @@ label {
   color: white;
   transform: rotateX(180deg);
 }
+
+.big-button {
+  background-color: blue;
+  height: 50px;
+  width: 50px;
+}
+
+.collectionCardContainer {
+  display: flex;
+  flex-direction: column;
+}

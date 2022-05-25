@@ -10,7 +10,7 @@ class Flashcard extends Model {
       type: "object",
       required: ["videoURL", "videoStartTime", "videoEndTime"],
       properties: {
-        videoURL: { type: "string", pattern: "/^(?:https?:\/\/)?(?:www\.|m\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/" },
+        videoURL: { type: "string", pattern: "^(?:https?:\\\/\\\/)?(?:www\\.|m\\.)?(?:youtu\\.be\\\/|youtube\\.com\\\/(?:embed\\\/|v\\\/|watch\\?v=|watch\\?.+&v=))((\\w|-){11})(?:\\S+)?$" },
         videoStartTime: { type: ["string", "integer"] },
         videoEndTime: { type: ["string", "integer"] },
         subtitles: { type: "string" },

@@ -10,6 +10,9 @@ exports.up = async (knex) => {
     table.bigIncrements("id");
     table.bigInteger("flashcardId").notNullable().unsigned().index().references("flashcards.id");
     table.bigInteger("userId").notNullable().unsigned().index().references("users.id");
+    table.integer("repetitions").defaultTo(0);
+    table.integer("efactor").defaultTo(2.5);
+    table.integer("interval").defaultTo(0.0);
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now());
     table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now());
   });

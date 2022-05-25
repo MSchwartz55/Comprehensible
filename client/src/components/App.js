@@ -8,8 +8,6 @@ import RegistrationForm from "./registration/RegistrationForm";
 import SignInForm from "./authentication/SignInForm";
 import TopBar from "./layout/TopBar";
 import Home from "./Home";
-import AuthenticatedRoute from "./authentication/AuthenticatedRoute";
-import PersonalCollection from "./PersonalCollection";
 
 const App = (props) => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -36,7 +34,6 @@ const App = (props) => {
         </Route>
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
-        <AuthenticatedRoute path="/collection" component={PersonalCollection} />
       </Switch>
     </Router>
   );
