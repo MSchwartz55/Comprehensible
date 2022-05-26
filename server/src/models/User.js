@@ -29,7 +29,7 @@ class User extends uniqueFunc(Model) {
       required: ["email"],
 
       properties: {
-        email: { type: "string", format: "email" },
+        email: { type: "string", pattern: "^\\S+@\\S+\\.\\S+$" },
         cryptedPassword: { type: "string" },
       },
     };
@@ -43,6 +43,33 @@ class User extends uniqueFunc(Model) {
     }
 
     return serializedJson;
+  }
+
+  static get relationMappings() {
+    const { Collection, Flashcard } = require("./index.js");
+
+    return {
+      flashcards: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Flashcard,
+        join: {
+          from: "users.id",
+          through: {
+            from: "collections.userId",
+            to: "collections.flashcardId"
+          },
+          to: "flashcards.id"
+        }
+      },
+      collections: {
+        relation: Model.HasManyRelation,
+        modelClass: Collection,
+        join: {
+          from: "users.id",
+          to: "collections.userId"
+        }
+      }
+    }
   }
 }
 

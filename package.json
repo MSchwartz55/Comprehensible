@@ -17,6 +17,6 @@
     "e2e:run": "yarn workspace Comprehensible-e2e e2e:run"
   },
   "engines": {
-    "node": "^16.13"
+    "node": "^14.19"
   }
 }
