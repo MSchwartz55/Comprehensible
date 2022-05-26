@@ -60,7 +60,7 @@ const Home = (props) => {
   }
 
   const onSelectButtonClick = () => {
-    if (getUserId) {
+    if (getUserId()) {
       const showListData = [];
       for (let i = 0; i < collection.length; i++) {
         if (collection[i].show) {
@@ -95,7 +95,7 @@ const Home = (props) => {
 
           <div className="buttons">
             <button className={"white-text direction-button"} onClick={onAddButtonClick}>Add New Flash Card</button>
-            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>{collectionButtonText}</button>;
+            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>{"Go to Collection (Must be signed in)"}</button>;
           </div>;
         </div>
       )
@@ -107,7 +107,7 @@ const Home = (props) => {
       return (
         <div>
           <RandomPersonalFlashcard showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} />
-          <div className="collection-buttons">
+          <div className="buttons-shuffle">
             <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Shuffle Random Cards</button>
           </div>
         </div>
