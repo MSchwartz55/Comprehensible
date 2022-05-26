@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import RandomPublicFlashcard from "./flashcard/RandomPublicFlashcard.js";
 import RandomPersonalFlashcard from "./flashcard/RandomPersonalCard.js";
 import NewFlashcardForm from "./flashcard/NewFlashcardForm.js";
+import showCardInCollection from "../services/showCardInCollection.js";
+
 
 const Home = (props) => {
   const [flashcardData, setFlashcardData] = useState([])
   const [collection, setCollection] = useState([]);
+  const [showList, setShowList] = useState([]);
   const [renderForm, setRenderForm] = useState(false);
   const [random, setRandom] = useState(true);
 
@@ -16,11 +19,13 @@ const Home = (props) => {
         const error = `${response.status} (${response.statusText})`;
         throw (error)
       }
-      const collectionData = await response.json();
-      const collectionList = collectionData.collection.map((entry) => {
-        return entry.flashcard;
+      const responseData = await response.json();
+      const collectionData = responseData.collection;
+      const collectionList = collectionData.map((entry) => {
+        return { flashcard: entry.flashcard, interval: entry.interval, show: showCardInCollection(entry) };
       })
-      setCollection(collectionList)
+
+      setCollection(collectionList);
     } catch (error) {
       console.error(error)
     }
@@ -50,6 +55,15 @@ const Home = (props) => {
   }
 
   const onSelectButtonClick = () => {
+
+    const showListData = [];
+    for (let i = 0; i < collection.length; i++) {
+      if (collection[i].show) {
+        showListData.push(collection[i]);
+      }
+    }
+    setShowList(showListData);
+
     setRandom(!random);
   }
 
@@ -67,7 +81,7 @@ const Home = (props) => {
 
       return (
         <div className="flashcardList">
-          <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} />
+          <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} showList={showList} setShowList={setShowList} />
           <button onClick={onAddButtonClick}>Add new flash card</button>
           <button onClick={onSelectButtonClick}>Collection</button>
         </div>
@@ -75,12 +89,11 @@ const Home = (props) => {
     }
 
     if (collection.length > 0) {
-      const randomCollectionIndex = Math.floor(Math.random() * (collection.length));
+      const randomShowListIndex = Math.floor(Math.random() * (showList.length));
 
       return (
         <div>
-          <RandomPersonalFlashcard flashcardData={collection} randomIndex={randomCollectionIndex} />
-          <button onClick={onAddButtonClick}>Add new flash card</button>
+          <RandomPersonalFlashcard showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} />
           <button onClick={onSelectButtonClick}>Random</button>
         </div>
       )

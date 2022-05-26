@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import AddCardButton from "./AddCardButton";
 import YoutubeEmbed from "./YoutubeEmbed";
 
-const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setCollection }) => {
+const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setCollection, setShowList }) => {
   const [visitedIndexList, setVisitedIndexList] = useState([randomIndex]);
   const [moreCards, setMoreCards] = useState(flashcardData.length > 1);
-
-  const getRandom = () => {
-    return Math.floor(Math.random() * (flashcardData.length));
-  }
 
   const postToCollection = async (flashcardId) => {
     try {
@@ -23,13 +19,17 @@ const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setColl
       }
       const body = await response.json();
       console.log(body);
-      setCollection([...collection, body.collection[0].flashcard]);
+      setCollection([...collection, { flashcard: body.collection[0].flashcard, interval: body.collection[0].interval, show: true }]);
     } catch (error) {
       console.error(error)
     }
   }
 
   const handleNextClick = () => {
+    const getRandom = () => {
+      return Math.floor(Math.random() * (flashcardData.length));
+    }
+
     if (moreCards) {
       let newRandomIndex = getRandom();
       while (visitedIndexList.includes(newRandomIndex)) {

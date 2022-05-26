@@ -6,7 +6,7 @@ const AddCardButton = ({ collection, flashcardId, handleClick }) => {
   let inCollection;
 
   for (let i = 0; i < collection.length; i++) {
-    if (collection[i].id === flashcardId) {
+    if (collection[i].flashcard.id === flashcardId) {
       inCollection = true;
     }
   }
