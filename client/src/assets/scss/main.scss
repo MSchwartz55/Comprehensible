@@ -14,8 +14,24 @@
   tab-size: 4;
 }
 
+iframe {
+  border: 8px solid #f1f1f1;
+  border-radius: 10px;
+}
+
 label {
   display: flex;
+}
+
+.direction-button {
+  color: #F9FAF8;
+  border-color: #F9FAF8;
+  border-width: 2px;
+  border-radius: 5px;
+  border-style: solid;
+  font-size: 24px;
+  padding: .5rem;
+  margin: .5rem;
 }
 
 .container {
@@ -50,11 +66,14 @@ label {
   align-items: center;
 }
 
+.white-text {
+  color: #F9FAF8;
+}
+
 .flip-card {
   background-color: transparent;
   width: 560px;
   height: 315px;
-  border: 1px solid #f1f1f1;
   perspective: 1000px;
 }
 

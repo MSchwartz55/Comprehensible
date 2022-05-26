@@ -83,8 +83,8 @@ const Home = (props) => {
       return (
         <div className="flashcardList">
           <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} showList={showList} setShowList={setShowList} />
-          <button onClick={onAddButtonClick}>Add new flash card</button>
-          <button onClick={onSelectButtonClick}>Collection</button>
+          <button className={"white-text"} onClick={onAddButtonClick}>Add new flash card</button>
+          <button className={"white-text"} onClick={onSelectButtonClick}>Collection</button>
         </div>
       )
     }
@@ -95,7 +95,7 @@ const Home = (props) => {
       return (
         <div>
           <RandomPersonalFlashcard showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} />
-          <button onClick={onSelectButtonClick}>Random</button>
+          <button className={"white-text"} onClick={onSelectButtonClick}>Random</button>
         </div>
       )
     }

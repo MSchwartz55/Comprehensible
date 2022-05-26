@@ -59,8 +59,8 @@ const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setColl
     postToCollection(currentFlashcard.id);
   }
 
-  const previousButtonComponent = visitedIndexList.length > 1 ? <button onClick={handlePreviousClick}>Previous Card</button> : null;
-  const nextButtonComponent = moreCards ? <button onClick={handleNextClick}>Next Card</button> : <p>No cards left!</p>;
+  const previousButtonComponent = visitedIndexList.length > 1 ? <button className="direction-button" onClick={handlePreviousClick}>Previous Card</button> : null;
+  const nextButtonComponent = moreCards ? <button className="direction-button" onClick={handleNextClick}>Next Card</button> : <p>No cards left!</p>;
 
   return (
     <div className="flashcardList">

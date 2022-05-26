@@ -20,7 +20,7 @@ const AddCardButton = ({ collection, flashcardId, handleClick }) => {
     return null;
   }
   return (
-    <button onClick={handleButtonClick}>Add to collection</button>
+    <button className={"white-text"} onClick={handleButtonClick}>Add to collection</button>
   );
 }
 
