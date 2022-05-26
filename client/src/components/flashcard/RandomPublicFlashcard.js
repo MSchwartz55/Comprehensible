@@ -60,13 +60,14 @@ const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setColl
   }
 
   const previousButtonComponent = visitedIndexList.length > 1 ? <button className="direction-button" onClick={handlePreviousClick}>Previous Card</button> : null;
-  const nextButtonComponent = moreCards ? <button className="direction-button" onClick={handleNextClick}>Next Card</button> : <p>No cards left!</p>;
+  const nextButtonComponent = moreCards ? <button className="direction-button" onClick={handleNextClick}>Next Card</button> : <button className="direction-button">No cards left!</button>;
 
   return (
-    <div className="flashcardList">
-      {previousButtonComponent}
+    <div className="card-container">
+      <div className="buttons">
+        {previousButtonComponent} {nextButtonComponent}
+      </div>
       <YoutubeEmbed {...currentFlashcard} />
-      {nextButtonComponent}
       <AddCardButton collection={collection} flashcardId={currentFlashcard.id} handleClick={handleAddClick} />
     </div>
   )

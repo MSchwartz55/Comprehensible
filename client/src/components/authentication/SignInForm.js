@@ -41,15 +41,15 @@ const SignInForm = () => {
             "Content-Type": "application/json",
           })
         })
-        if(!response.ok) {
+        if (!response.ok) {
           const errorMessage = `${response.status} (${response.statusText})`
           const error = new Error(errorMessage)
-          throw(error)
+          throw (error)
         }
         const userData = await response.json()
         setShouldRedirect(true)
       }
-    } catch(err) {
+    } catch (err) {
       console.error(`Error in fetch: ${err.message}`)
     }
   }
@@ -66,18 +66,18 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="grid-container" onSubmit={onSubmit}>
+    <div className="grid-container white-text" onSubmit={onSubmit}>
       <h1>Sign In</h1>
       <form>
         <div>
-          <label>
+          <label className="white-text">
             Email
             <input type="text" name="email" value={userPayload.email} onChange={onInputChange} />
             <FormError error={errors.email} />
           </label>
         </div>
         <div>
-          <label>
+          <label className="white-text">
             Password
             <input
               type="password"

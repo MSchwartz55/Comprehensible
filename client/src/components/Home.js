@@ -3,6 +3,7 @@ import RandomPublicFlashcard from "./flashcard/RandomPublicFlashcard.js";
 import RandomPersonalFlashcard from "./flashcard/RandomPersonalCard.js";
 import NewFlashcardForm from "./flashcard/NewFlashcardForm.js";
 import showCardInCollection from "../services/showCardInCollection.js";
+import getUserId from "../services/getUserId.js";
 
 
 const Home = (props) => {
@@ -67,11 +68,12 @@ const Home = (props) => {
     setRandom(!random);
   }
 
+  const userCollectionButton = <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Go to Collection</button>;
 
   if (flashcardData.length > 0) {
     if (renderForm) {
       return (
-        <div>
+        <div className="form-outer-div">
           <NewFlashcardForm flashcardData={flashcardData} setFlashcardData={setFlashcardData} setRenderForm={setRenderForm} />
         </div>
       )
@@ -81,10 +83,13 @@ const Home = (props) => {
       const randomIndex = Math.floor(Math.random() * (flashcardData.length));
 
       return (
-        <div className="flashcardList">
+        <div className="card-container">
           <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} showList={showList} setShowList={setShowList} />
-          <button className={"white-text"} onClick={onAddButtonClick}>Add new flash card</button>
-          <button className={"white-text"} onClick={onSelectButtonClick}>Collection</button>
+
+          <div className="buttons">
+            <button className={"white-text direction-button"} onClick={onAddButtonClick}>Add New Flash Card</button>
+            {getUserId() == null ? userCollectionButton : null}
+          </div>;
         </div>
       )
     }
@@ -95,13 +100,17 @@ const Home = (props) => {
       return (
         <div>
           <RandomPersonalFlashcard showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} />
-          <button className={"white-text"} onClick={onSelectButtonClick}>Random</button>
+          <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Shuffle Random Cards</button>
         </div>
       )
     }
   }
 
-  return <h1>Loading...</h1>
+  return (
+    <div className="loading">
+      <h1 className={"white-text direction-button"}>Loading...</h1>
+    </div>
+  )
 }
 
 export default Home;

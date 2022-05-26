@@ -27,8 +27,12 @@ const YoutubeEmbed = ({ videoURL, videoStartTime, videoEndTime, subtitles, trans
   return (
     <div className="flip-card">
       <div className={flipped ? "flip-card-inner flipped" : "flip-card-inner"} onClick={toggleFlip}>
-        <div className="flip-card-front">
-          <button className="big-button" onClick={onReplayClick}>Replay</button>
+        <div className="flip-card-front overlay" >
+          <button className="big-button" onClick={onReplayClick}>
+            <div className="inner-container">
+              Replay
+            </div>
+          </button>
           <iframe key={iframeKey} width="560" height="315" src={formattedSrc} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           <p className="subtitles"><span className={spanClass}>{subtitles}</span></p>
         </div>

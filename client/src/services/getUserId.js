@@ -1,17 +1,15 @@
-const getCurrentUser = async () => {
+const getUserId = async () => {
   const response = await fetch("/api/v1/user-sessions/current", {
     headers: new Headers({
       "Content-Type": "application/json",
     })
   })
   if (!response.ok) {
-    const errorMessage = `${response.status} (${response.statusText})`
-    const error = new Error(errorMessage)
-    throw (error)
+    return null;
   }
   const userData = await response.json()
   console.log(userData)
-  return userData
+  return userData.id
 }
 
-export default getCurrentUser
+export default getUserId;

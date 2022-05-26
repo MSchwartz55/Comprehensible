@@ -86,68 +86,76 @@ const NewFlashcardForm = (props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={"flashcardForm"}>
-      <ErrorList errors={errors} />
-      <div className="flip-card" >
-        <div className={flipped ? "flip-card-inner flipped" : "flip-card-inner"} onClick={toggleFlip}>
 
-          <div className="flip-card-front">
-            <label htmlFor="videoURL">
-              URL <input type="text"
-                name="videoURL" id="videoURL"
-                value={formValues.videoURL}
-                onChange={handleChange}
-                onClick={handleChildClick} />
-            </label>
+    <div className="form-and-button-container">
+      <button onClick={handleButtonClick} className="direction-button x">X</button>
+      <form onSubmit={handleSubmit} className={"flashcardForm"}>
+        <ErrorList errors={errors} />
+        <div className="flip-card" >
+          <div className={flipped ? "flip-card-inner flipped" : "flip-card-inner"} onClick={toggleFlip}>
 
-            <label htmlFor="videoStartTime">
-              Start <input type="text"
-                name="videoStartTime"
-                id="videoStartTime"
-                value={formValues.videoStartTime}
-                onChange={handleChange}
-                onBlur={onBlur}
-                onClick={handleChildClick} />
-            </label>
+            <div className="flip-card-form-front">
+              <label htmlFor="videoURL">
+                <input type="text"
+                  name="videoURL" id="videoURL"
+                  value={formValues.videoURL}
+                  onChange={handleChange}
+                  onClick={handleChildClick} />
+                URL
+              </label>
 
-            <label htmlFor="videoEndTime">
-              End <input type="text"
-                name="videoEndTime"
-                id="videoEndTime"
-                value={formValues.videoEndTime}
-                onChange={handleChange}
-                onBlur={onBlur}
-                onClick={handleChildClick} />
-            </label>
+              <label htmlFor="videoStartTime">
+                <input type="text"
+                  name="videoStartTime"
+                  id="videoStartTime"
+                  value={formValues.videoStartTime}
+                  onChange={handleChange}
+                  onBlur={onBlur}
+                  onClick={handleChildClick} />
+                Start Time
+              </label>
 
-            <label htmlFor="subtitles">
-              Subtitles <input type="text"
-                name="subtitles"
-                id="subtitles"
-                value={formValues.subtitles}
-                onChange={handleChange}
-                onClick={handleChildClick} />
-            </label>
-          </div>
+              <label htmlFor="videoEndTime">
+                <input type="text"
+                  name="videoEndTime"
+                  id="videoEndTime"
+                  value={formValues.videoEndTime}
+                  onChange={handleChange}
+                  onBlur={onBlur}
+                  onClick={handleChildClick} />
+                End Time
+              </label>
 
-          <div className="flip-card-back">
-            <label htmlFor="transcript">
-              <textarea name="transcript"
-                id="transcript"
-                cols="30"
-                rows="10"
-                value={formValues.transcript}
-                onChange={handleChange}
-                onClick={handleChildClick}>
-              </textarea>
-            </label>
+              <label htmlFor="subtitles">
+                <input type="text"
+                  name="subtitles"
+                  id="subtitles"
+                  value={formValues.subtitles}
+                  onChange={handleChange}
+                  onClick={handleChildClick} />
+                Subtitles
+              </label>
+            </div>
 
-            <input type="submit" value="Submit" />
+            <div className="flip-card-form-back">
+              <label htmlFor="transcript">
+                <textarea name="transcript"
+                  id="transcript"
+                  cols="30"
+                  rows="10"
+                  value={formValues.transcript}
+                  onChange={handleChange}
+                  onClick={handleChildClick}>
+                </textarea>
+              </label>
+
+              <input type="submit" value="Submit" />
+            </div>
           </div>
         </div>
-      </div>
-      <button onClick={handleButtonClick}>X</button>
-    </form>
+      </form>
+    </div>
+
   )
 
 }
