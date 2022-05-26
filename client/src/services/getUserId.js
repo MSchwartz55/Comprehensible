@@ -8,7 +8,7 @@ const getUserId = async () => {
     return null;
   }
   const userData = await response.json()
-  console.log(userData)
+
   return userData.id
 }
 

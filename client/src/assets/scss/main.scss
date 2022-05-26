@@ -50,6 +50,12 @@ form {
   justify-content: center;
 }
 
+.repetitionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .overlay {
   display: flex;
   justify-content: center;
@@ -214,4 +220,10 @@ form {
 .collectionCardContainer {
   display: flex;
   flex-direction: column;
+}
+
+.collection-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

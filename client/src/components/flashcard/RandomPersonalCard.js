@@ -84,8 +84,8 @@ const RandomPersonalFlashcard = ({ randomShowListIndex, collection, setCollectio
   const handleHardClick = cardDifficultyClickWrapper(3);
   const handleAgainClick = cardDifficultyClickWrapper(1);
 
-  const previousButtonComponent = visitedIndexList.length > 1 ? <button onClick={handlePreviousClick}>Previous Card</button> : null;
-  const nextButtonComponent = moreCards ? <button onClick={handleNextClick}>Next Card</button> : <button className="direction-button">No cards left!</button>;
+  const previousButtonComponent = visitedIndexList.length > 1 ? <button className="white-text direction-button" onClick={handlePreviousClick}>Previous Card</button> : null;
+  const nextButtonComponent = moreCards ? <button className="white-text direction-button" onClick={handleNextClick}>Next Card</button> : <button className="white-text direction-button">No cards left!</button>;
 
   if (!evaluated) {
     return (

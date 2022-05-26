@@ -12,6 +12,7 @@ const Home = (props) => {
   const [showList, setShowList] = useState([]);
   const [renderForm, setRenderForm] = useState(false);
   const [random, setRandom] = useState(true);
+  const [collectionButtonText, setCollectionButtonText] = useState("Sign in to Go to Collection");
 
   const fetchPersonalCollection = async () => {
     try {
@@ -49,6 +50,9 @@ const Home = (props) => {
   useEffect(() => {
     fetchFlashcardData();
     fetchPersonalCollection();
+    if (getUserId()) {
+      setCollectionButtonText("Go to Collection")
+    }
   }, []);
 
   const onAddButtonClick = () => {
@@ -56,19 +60,22 @@ const Home = (props) => {
   }
 
   const onSelectButtonClick = () => {
-
-    const showListData = [];
-    for (let i = 0; i < collection.length; i++) {
-      if (collection[i].show) {
-        showListData.push(collection[i]);
+    if (getUserId) {
+      const showListData = [];
+      for (let i = 0; i < collection.length; i++) {
+        if (collection[i].show) {
+          showListData.push(collection[i]);
+        }
       }
-    }
-    setShowList(showListData);
+      setShowList(showListData);
+      setCollectionButtonText("Go to Collection")
+      setRandom(!random);
+    } else {
 
-    setRandom(!random);
+    }
   }
 
-  const userCollectionButton = <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Go to Collection</button>;
+  // const userCollectionButton = <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Go to Collection</button>;
 
   if (flashcardData.length > 0) {
     if (renderForm) {
@@ -88,7 +95,7 @@ const Home = (props) => {
 
           <div className="buttons">
             <button className={"white-text direction-button"} onClick={onAddButtonClick}>Add New Flash Card</button>
-            {getUserId() == null ? userCollectionButton : null}
+            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>{collectionButtonText}</button>;
           </div>;
         </div>
       )
@@ -100,7 +107,9 @@ const Home = (props) => {
       return (
         <div>
           <RandomPersonalFlashcard showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} />
-          <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Shuffle Random Cards</button>
+          <div className="collection-buttons">
+            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Shuffle Random Cards</button>
+          </div>
         </div>
       )
     }
