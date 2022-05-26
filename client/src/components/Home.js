@@ -67,6 +67,7 @@ const Home = (props) => {
     setRandom(!random);
   }
 
+
   if (flashcardData.length > 0) {
     if (renderForm) {
       return (

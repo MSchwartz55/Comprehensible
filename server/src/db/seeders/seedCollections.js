@@ -12,7 +12,9 @@ const seedCollections = async () => {
     },
     {
       flashcardId: 1,
-      userId: 2
+      userId: 2,
+      timeOfLastClick: new Date("5/24/22"),
+      interval: 6
     }
   ]
 

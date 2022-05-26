@@ -31,10 +31,9 @@ collectionsRouter.post("/", async (req, res) => {
         repetitions: newRepetitionSchedule.repetitions,
         efactor: newRepetitionSchedule.efactor,
         interval: newRepetitionSchedule.interval,
-        timeOfLastClick: new Date().getMilliseconds()
+        timeOfLastClick: new Date()
       });
       const collection = await Collection.query().findOne({ flashcardId, userId });
-      console.log(collection);
       return res.status(201).json({ collection });
     }
 
@@ -42,7 +41,6 @@ collectionsRouter.post("/", async (req, res) => {
     const collection = await Collection.query().where("userId", userId).where("flashcardId", flashcardId).withGraphFetched("flashcard")
     return res.status(201).json({ collection });
   } catch (errors) {
-    console.log(errors);
     return res.status(500).json({ errors });
   }
 });

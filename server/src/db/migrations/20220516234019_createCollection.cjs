@@ -13,7 +13,7 @@ exports.up = async (knex) => {
     table.integer("repetitions").defaultTo(0);
     table.float("efactor").defaultTo(2.5);
     table.float("interval").defaultTo(0.0);
-    table.integer("timeOfLastClick");
+    table.datetime("timeOfLastClick");
     table.timestamp("createdAt").notNullable().defaultTo(knex.fn.now());
     table.timestamp("updatedAt").notNullable().defaultTo(knex.fn.now());
   });
