@@ -9,7 +9,10 @@ const showCardInCollection = (collectionEntry) => {
   const millisecondDelta = Math.abs(todayMilli - lastClickedMilli);
   const dayDelta = Math.ceil(millisecondDelta / (1000 * 60 * 60 * 24));
 
-  return dayDelta > collectionEntry.interval
+  console.log("delta: " + dayDelta);
+  console.log("interval: " + collectionEntry.interval);
+
+  return dayDelta >= collectionEntry.interval
 }
 
 export default showCardInCollection;

@@ -82,25 +82,23 @@ const RandomPersonalFlashcard = ({ randomShowListIndex, collection, setCollectio
   const handleEasyClick = cardDifficultyClickWrapper(5);
   const handleMediumClick = cardDifficultyClickWrapper(4);
   const handleHardClick = cardDifficultyClickWrapper(3);
-  const handleAgainClick = cardDifficultyClickWrapper(1);
 
-  const previousButtonComponent = visitedIndexList.length > 1 ? <button className="white-text direction-button" onClick={handlePreviousClick}>Previous Card</button> : null;
-  const nextButtonComponent = moreCards ? <button className="white-text direction-button" onClick={handleNextClick}>Next Card</button> : <button className="white-text direction-button">No cards left!</button>;
+  const previousButtonComponent = visitedIndexList.length > 1 ? <button className="white-text next-previous-button" onClick={handlePreviousClick}>Previous Card</button> : <div className="placeholder-block-personal"></div>;
+  const nextButtonComponent = moreCards ? <button className="white-text next-previous-button" onClick={handleNextClick}>Next Card</button> : <button className="white-text next-previous-button">No cards left!</button>;
 
   if (!evaluated) {
     return (
       <div className="collectionCardContainer">
+        <button className="hidden-button">Already Added </button>
         <div className="card-container">
-          <div className="buttons">
-            {previousButtonComponent} {nextButtonComponent}
+          <div className="embed-and-buttons-personal">
+            {previousButtonComponent}  <YoutubeEmbed {...currentFlashcard} /> {nextButtonComponent}
           </div>
-          <YoutubeEmbed {...currentFlashcard} />
         </div>
         <div className="repetitionButtons">
-          <button className="button" onClick={handleAgainClick}>Again</button>
-          <button className="button" onClick={handleHardClick}>Hard</button>
-          <button className="button" onClick={handleMediumClick}>Medium</button>
-          <button className="button" onClick={handleEasyClick}>Easy</button>
+          <button className="difficulty-button hard" onClick={handleHardClick}>Hard</button>
+          <button className="difficulty-button medium" onClick={handleMediumClick}>Medium</button>
+          <button className="difficulty-button easy" onClick={handleEasyClick}>Easy</button>
         </div>
       </div>
     )
@@ -108,10 +106,9 @@ const RandomPersonalFlashcard = ({ randomShowListIndex, collection, setCollectio
   return (
     <div className="collectionCardContainer">
       <div className="flashcardList">
-        <div className="buttons">
-          {previousButtonComponent} {nextButtonComponent}
+        <div className="embed-and-buttons-personal">
+          {previousButtonComponent}  <YoutubeEmbed {...currentFlashcard} /> {nextButtonComponent}
         </div>
-        <YoutubeEmbed {...currentFlashcard} />
       </div>
     </div>
   )
