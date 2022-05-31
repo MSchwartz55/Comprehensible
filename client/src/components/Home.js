@@ -10,7 +10,6 @@ const Home = (props) => {
   const [showList, setShowList] = useState([]);
   const [renderForm, setRenderForm] = useState(false);
   const [random, setRandom] = useState(true);
-  const [loadKey, setLoadKey] = useState(Math.random());
 
   const fetchPersonalCollection = async () => {
     try {
@@ -49,6 +48,17 @@ const Home = (props) => {
     fetchFlashcardData();
     fetchPersonalCollection();
   }, []);
+
+  useEffect(() => {
+    const showListData = [];
+    for (let i = 0; i < collection.length; i++) {
+      if (collection[i].show) {
+        showListData.push(collection[i]);
+      }
+
+      setShowList(showListData);
+    }
+  }, [collection]);
 
   const onAddButtonClick = () => {
     setRenderForm(true);
@@ -91,11 +101,23 @@ const Home = (props) => {
     }
 
     if (collection.length > 0) {
-      const randomShowListIndex = Math.floor(Math.random() * (showList.length));
+      if (showList.length === 0) {
+        return (
+          <div className="main-container">
+            <h1 className="white-text">Congratulations! You've finished studying all of your cards for now.</h1>
+            <div className="buttons-shuffle">
+              <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Find New Cards</button>
+            </div>
+          </div>
+        )
+      }
 
+      const randomShowListIndex = Math.floor(Math.random() * (showList.length));
+      const currentFlashcard = showList[randomShowListIndex];
+      // showList={showList} randomShowListIndex={randomShowListIndex}
       return (
         <div className="main-container">
-          <RandomPersonalFlashcard key={loadKey} showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} setLoadKey={setLoadKey} />
+          <RandomPersonalFlashcard currentFlashcard={currentFlashcard} collection={collection} setCollection={setCollection} setShowList={setShowList} />
           <div className="buttons-shuffle">
             <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Find New Cards</button>
           </div>
