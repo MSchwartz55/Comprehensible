@@ -291,7 +291,6 @@ form {
   border-width: 1px;
   border-radius: 5px;
   border-style: solid;
-  border-radius: 10px;
   color: #ffffff;
   font-family: inherit;
   font-size: 1rem;
@@ -362,11 +361,36 @@ form {
   margin: .5rem;
 }
 
+
 .landing {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8rem;
+    width: 85vw;
+  }
+
+  .intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .description {
+    display: flex;
+    background-color: #ffffff;
+    color: #255dad;
+    border-radius: 5px;
+    padding: .5rem 1rem;
+  }
 }
 
 .registration-sign-up {
