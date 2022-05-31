@@ -16,11 +16,29 @@
 
 .title {
   font-size: 30px;
+  background-color: #e6e6e6;
 }
 
+.raised-letter {
+  z-index: 1;
+
+}
+
+.logo {
+  width: 3.5rem;
+  height: 3.5rem;
+  position: absolute;
+  transform: rotate(-90deg);
+  top: .45rem;
+  left: 16.8rem;
+}
+
+.logo-overlay {
+  position: relative;
+}
 
 iframe {
-  border: 8px solid #f1f1f1;
+  border: 8px solid #ffffff;
   border-radius: 10px;
 }
 

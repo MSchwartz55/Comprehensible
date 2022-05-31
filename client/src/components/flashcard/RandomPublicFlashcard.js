@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AddCardButton from "./AddCardButton";
 import YoutubeEmbed from "./YoutubeEmbed";
 
-const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setCollection, setShowList }) => {
+const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setCollection }) => {
   const [visitedIndexList, setVisitedIndexList] = useState([randomIndex]);
   const [moreCards, setMoreCards] = useState(flashcardData.length > 1);
 
@@ -18,7 +18,6 @@ const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setColl
         throw (error);
       }
       const body = await response.json();
-      console.log(body);
       setCollection([...collection, { flashcard: body.collection[0].flashcard, interval: body.collection[0].interval, show: true }]);
     } catch (error) {
       console.error(error)

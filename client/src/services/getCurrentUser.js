@@ -10,7 +10,7 @@ const getCurrentUser = async () => {
     throw (error)
   }
   const userData = await response.json()
-  console.log(userData)
+
   return userData
 }
 

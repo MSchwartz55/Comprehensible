@@ -10,6 +10,7 @@ const Home = (props) => {
   const [showList, setShowList] = useState([]);
   const [renderForm, setRenderForm] = useState(false);
   const [random, setRandom] = useState(true);
+  const [loadKey, setLoadKey] = useState(Math.random());
 
   const fetchPersonalCollection = async () => {
     try {
@@ -65,8 +66,6 @@ const Home = (props) => {
     }
   }
 
-  // const userCollectionButton = <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Go to Collection</button>;
-
   if (flashcardData.length > 0) {
     if (renderForm) {
       return (
@@ -81,7 +80,7 @@ const Home = (props) => {
 
       return (
         <div className="main-container">
-          <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} showList={showList} setShowList={setShowList} />
+          <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} />
 
           <div className="buttons">
             <button className={"white-text direction-button"} onClick={onAddButtonClick}>Add New Flash Card</button>
@@ -96,7 +95,7 @@ const Home = (props) => {
 
       return (
         <div className="main-container">
-          <RandomPersonalFlashcard showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} />
+          <RandomPersonalFlashcard key={loadKey} showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} setLoadKey={setLoadKey} />
           <div className="buttons-shuffle">
             <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Find New Cards</button>
           </div>
