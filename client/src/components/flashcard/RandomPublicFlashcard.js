@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AddCardButton from "./AddCardButton";
 import YoutubeEmbed from "./YoutubeEmbed";
 
-const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setCollection, setShowList }) => {
+const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setCollection }) => {
   const [visitedIndexList, setVisitedIndexList] = useState([randomIndex]);
   const [moreCards, setMoreCards] = useState(flashcardData.length > 1);
 
@@ -18,7 +18,6 @@ const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setColl
         throw (error);
       }
       const body = await response.json();
-      console.log(body);
       setCollection([...collection, { flashcard: body.collection[0].flashcard, interval: body.collection[0].interval, show: true }]);
     } catch (error) {
       console.error(error)
@@ -59,16 +58,19 @@ const RandomPublicFlashcard = ({ randomIndex, flashcardData, collection, setColl
     postToCollection(currentFlashcard.id);
   }
 
-  const previousButtonComponent = visitedIndexList.length > 1 ? <button className="direction-button" onClick={handlePreviousClick}>Previous Card</button> : null;
-  const nextButtonComponent = moreCards ? <button className="direction-button" onClick={handleNextClick}>Next Card</button> : <button className="direction-button">No cards left!</button>;
+  const previousButtonComponent = visitedIndexList.length > 1 ? <button className="next-previous-button" onClick={handlePreviousClick}>Previous Card</button> : <div className="placeholder-block-public"></div>;
+  const nextButtonComponent = moreCards ? <button className="next-previous-button" onClick={handleNextClick}>Next Card</button> : <button className="next-previous-button">No cards left!</button>;
 
   return (
-    <div className="card-container">
-      <div className="buttons">
-        {previousButtonComponent} {nextButtonComponent}
-      </div>
-      <YoutubeEmbed {...currentFlashcard} />
+    <div className="full-public-card">
       <AddCardButton collection={collection} flashcardId={currentFlashcard.id} handleClick={handleAddClick} />
+      <div className="card-container">
+        <div className="embed-and-buttons-public">
+          {previousButtonComponent}
+          <YoutubeEmbed {...currentFlashcard} />
+          {nextButtonComponent}
+        </div>
+      </div>
     </div>
   )
 

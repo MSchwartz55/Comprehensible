@@ -62,7 +62,7 @@ const SignInForm = () => {
   };
 
   if (shouldRedirect) {
-    location.href = "/";
+    location.href = "/home";
   }
 
   return (
@@ -89,7 +89,7 @@ const SignInForm = () => {
           </label>
         </div>
         <div>
-          <input type="submit" className="button" value="Sign In" />
+          <input type="submit" className="button registration-sign-up" value="Sign In" />
         </div>
       </form>
     </div>

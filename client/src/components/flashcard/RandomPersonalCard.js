@@ -1,18 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import YoutubeEmbed from "./YoutubeEmbed";
 
-const RandomPersonalFlashcard = ({ randomShowListIndex, collection, setCollection, showList }) => {
-  if (showList.length === 0) {
-    return (
-      <div>
-        <h1 className="white-text">Congratulations! You've finished studying all of your cards for now.</h1>
-      </div>
-    )
-  }
-
-  const [visitedIndexList, setVisitedIndexList] = useState([randomShowListIndex]);
-  const [moreCards, setMoreCards] = useState(showList.length > 1);
-  const [evaluated, setEvaluated] = useState(false);
+const RandomPersonalFlashcard = ({ currentFlashcard, collection, setCollection }) => {
 
   const postToCollection = async (flashcardId, evaluation) => {
     try {
@@ -26,95 +15,48 @@ const RandomPersonalFlashcard = ({ randomShowListIndex, collection, setCollectio
         throw (error);
       }
       const body = await response.json();
+
       const collectionCopy = [...collection];
       const newCollection = collectionCopy.map((entry) => {
         if (entry.flashcard.id === flashcardId) {
-          return { ...entry, interval: body.collection[0].interval };
+          const showStatus = body.collection.interval === 1;
+          const newEntry = { ...entry, interval: body.collection.interval, show: showStatus };
+          return newEntry
         }
         return entry;
       })
-      setCollection([newCollection]);
+      setCollection(newCollection);
+
     } catch (error) {
       console.error(error)
     }
   }
 
-  const currentFlashcard = showList[visitedIndexList[visitedIndexList.length - 1]].flashcard;
-
-  const handleNextClick = () => {
-    const getRandom = () => {
-      return Math.floor(Math.random() * (showList.length));
-    }
-
-    if (moreCards) {
-      let newRandomIndex = getRandom();
-      while (visitedIndexList.includes(newRandomIndex)) {
-        newRandomIndex = getRandom();
-      }
-
-      setEvaluated(false);
-      setVisitedIndexList([...visitedIndexList, newRandomIndex]);
-
-      if (visitedIndexList.length === showList.length - 1) {
-        return setMoreCards(false);
-      }
-    }
-  }
-
-  const handlePreviousClick = () => {
-    const newVisitedIndexList = [...visitedIndexList];
-    newVisitedIndexList.pop();
-    setEvaluated(false);
-    setVisitedIndexList(newVisitedIndexList);
-    if (moreCards === false) {
-      setMoreCards(true)
-    }
-  }
-
   const cardDifficultyClickWrapper = (evaluation) => {
     const handleClick = () => {
-      setEvaluated(true)
-      postToCollection(currentFlashcard.id, evaluation);
+      postToCollection(currentFlashcard.flashcard.id, evaluation);
     }
     return handleClick;
   }
 
   const handleEasyClick = cardDifficultyClickWrapper(5);
   const handleMediumClick = cardDifficultyClickWrapper(4);
-  const handleHardClick = cardDifficultyClickWrapper(3);
-  const handleAgainClick = cardDifficultyClickWrapper(1);
+  const handleHardClick = cardDifficultyClickWrapper(2);
 
-  const previousButtonComponent = visitedIndexList.length > 1 ? <button className="white-text direction-button" onClick={handlePreviousClick}>Previous Card</button> : null;
-  const nextButtonComponent = moreCards ? <button className="white-text direction-button" onClick={handleNextClick}>Next Card</button> : <button className="white-text direction-button">No cards left!</button>;
-
-  if (!evaluated) {
-    return (
-      <div className="collectionCardContainer">
-        <div className="card-container">
-          <div className="buttons">
-            {previousButtonComponent} {nextButtonComponent}
-          </div>
-          <YoutubeEmbed {...currentFlashcard} />
-        </div>
-        <div className="repetitionButtons">
-          <button className="button" onClick={handleAgainClick}>Again</button>
-          <button className="button" onClick={handleHardClick}>Hard</button>
-          <button className="button" onClick={handleMediumClick}>Medium</button>
-          <button className="button" onClick={handleEasyClick}>Easy</button>
-        </div>
-      </div>
-    )
-  }
   return (
     <div className="collectionCardContainer">
-      <div className="flashcardList">
-        <div className="buttons">
-          {previousButtonComponent} {nextButtonComponent}
-        </div>
-        <YoutubeEmbed {...currentFlashcard} />
+      <button className="hidden-button">Already Added</button>
+      <div className="card-container">
+        <YoutubeEmbed {...currentFlashcard.flashcard} />
+      </div>
+      <div className="repetitionButtons">
+        <button className="difficulty-button hard" onClick={handleHardClick}>Hard</button>
+        <button className="difficulty-button medium" onClick={handleMediumClick}>Medium</button>
+        <button className="difficulty-button easy" onClick={handleEasyClick}>Easy</button>
       </div>
     </div>
   )
+
 }
 
 export default RandomPersonalFlashcard;

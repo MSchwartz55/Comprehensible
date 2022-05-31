@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import getUserId from "../../services/getUserId";
+import React, { useState, useEffect } from "react";
 
 const AddCardButton = ({ collection, flashcardId, handleClick }) => {
   const [clicked, setClicked] = useState(false);
@@ -12,18 +11,24 @@ const AddCardButton = ({ collection, flashcardId, handleClick }) => {
     }
   }
 
+  useEffect(() => {
+    for (let i = 0; i < collection.length; i++) {
+      if (collection[i].flashcard.id === flashcardId) {
+        inCollection = true;
+      }
+    }
+  }, [clicked])
+
   const handleButtonClick = () => {
     handleClick();
-    setClicked(true);
+    setClicked(!clicked);
   }
 
-  if (inCollection || clicked) {
-    return null;
-  } else if (getUserId()) {
-    return null;
+  if (inCollection) {
+    return <button className="white-text direction-button add">In Collection!</button>;
   }
   return (
-    <button className={"white-text direction-button"} onClick={handleButtonClick}>Add to Collection</button>
+    <button className={"white-text direction-button add"} onClick={handleButtonClick}>{"Add to Collection?"}</button>
   );
 }
 

@@ -88,7 +88,10 @@ const NewFlashcardForm = (props) => {
   return (
 
     <div className="form-and-button-container">
-      <button onClick={handleButtonClick} className="direction-button x">X</button>
+      <div className="form-top-butttons">
+        <button className="hidden-form-button">Already Added </button>
+        <button onClick={handleButtonClick} className="direction-button x">X</button>
+      </div>
       <form onSubmit={handleSubmit} className={"flashcardForm"}>
         <ErrorList errors={errors} />
         <div className="flip-card" >
@@ -142,14 +145,16 @@ const NewFlashcardForm = (props) => {
                 <textarea name="transcript"
                   id="transcript"
                   cols="30"
-                  rows="10"
+                  rows="13"
                   value={formValues.transcript}
                   onChange={handleChange}
-                  onClick={handleChildClick}>
+                  onClick={handleChildClick}
+                  placeholder={"translations"}>
+
                 </textarea>
               </label>
 
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Submit" className="button" />
             </div>
           </div>
         </div>

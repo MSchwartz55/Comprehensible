@@ -3,8 +3,6 @@ import RandomPublicFlashcard from "./flashcard/RandomPublicFlashcard.js";
 import RandomPersonalFlashcard from "./flashcard/RandomPersonalCard.js";
 import NewFlashcardForm from "./flashcard/NewFlashcardForm.js";
 import showCardInCollection from "../services/showCardInCollection.js";
-import getUserId from "../services/getUserId.js";
-
 
 const Home = (props) => {
   const [flashcardData, setFlashcardData] = useState([])
@@ -12,7 +10,6 @@ const Home = (props) => {
   const [showList, setShowList] = useState([]);
   const [renderForm, setRenderForm] = useState(false);
   const [random, setRandom] = useState(true);
-  const [collectionButtonText, setCollectionButtonText] = useState("Sign in to Go to Collection");
 
   const fetchPersonalCollection = async () => {
     try {
@@ -50,32 +47,34 @@ const Home = (props) => {
   useEffect(() => {
     fetchFlashcardData();
     fetchPersonalCollection();
-    if (getUserId()) {
-      setCollectionButtonText("Go to Collection")
-    }
   }, []);
+
+  useEffect(() => {
+    const showListData = [];
+    for (let i = 0; i < collection.length; i++) {
+      if (collection[i].show) {
+        showListData.push(collection[i]);
+      }
+
+      setShowList(showListData);
+    }
+  }, [collection]);
 
   const onAddButtonClick = () => {
     setRenderForm(true);
   }
 
   const onSelectButtonClick = () => {
-    if (getUserId()) {
-      const showListData = [];
-      for (let i = 0; i < collection.length; i++) {
-        if (collection[i].show) {
-          showListData.push(collection[i]);
-        }
+    const showListData = [];
+    for (let i = 0; i < collection.length; i++) {
+      if (collection[i].show) {
+        showListData.push(collection[i]);
       }
-      setShowList(showListData);
-      setCollectionButtonText("Go to Collection")
-      setRandom(!random);
-    } else {
 
+      setShowList(showListData);
+      setRandom(!random);
     }
   }
-
-  // const userCollectionButton = <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Go to Collection</button>;
 
   if (flashcardData.length > 0) {
     if (renderForm) {
@@ -90,25 +89,37 @@ const Home = (props) => {
       const randomIndex = Math.floor(Math.random() * (flashcardData.length));
 
       return (
-        <div className="card-container">
-          <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} showList={showList} setShowList={setShowList} />
+        <div className="main-container">
+          <RandomPublicFlashcard flashcardData={flashcardData} randomIndex={randomIndex} collection={collection} setCollection={setCollection} />
 
           <div className="buttons">
             <button className={"white-text direction-button"} onClick={onAddButtonClick}>Add New Flash Card</button>
-            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>{"Go to Collection (Must be signed in)"}</button>;
-          </div>;
+            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>{"Go to Collection"}</button>
+          </div>
         </div>
       )
     }
 
     if (collection.length > 0) {
-      const randomShowListIndex = Math.floor(Math.random() * (showList.length));
+      if (showList.length === 0) {
+        return (
+          <div className="main-container">
+            <h1 className="white-text">Congratulations! You've finished studying all of your cards for now.</h1>
+            <div className="buttons-shuffle">
+              <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Find New Cards</button>
+            </div>
+          </div>
+        )
+      }
 
+      const randomShowListIndex = Math.floor(Math.random() * (showList.length));
+      const currentFlashcard = showList[randomShowListIndex];
+      // showList={showList} randomShowListIndex={randomShowListIndex}
       return (
-        <div>
-          <RandomPersonalFlashcard showList={showList} randomShowListIndex={randomShowListIndex} collection={collection} setCollection={setCollection} />
+        <div className="main-container">
+          <RandomPersonalFlashcard currentFlashcard={currentFlashcard} collection={collection} setCollection={setCollection} setShowList={setShowList} />
           <div className="buttons-shuffle">
-            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Shuffle Random Cards</button>
+            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>Find New Cards</button>
           </div>
         </div>
       )
