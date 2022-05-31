@@ -17,7 +17,7 @@ In the app, users are able to:
 Future features:
 - Tag based filtering system for public/personal flashcards
 - Reporting feature for flashcard quality moderation
-- Browser extension to improve ease of uploading
+- Browser extension to improve card creation workflow
 
 
 To run the app locally:
