@@ -45,6 +45,8 @@ const Home = (props) => {
   }
 
   useEffect(() => {
+    console.log("user status: ");
+    console.log(props.user);
     fetchFlashcardData();
     fetchPersonalCollection();
   }, []);
@@ -87,6 +89,7 @@ const Home = (props) => {
 
     if (random) {
       const randomIndex = Math.floor(Math.random() * (flashcardData.length));
+      const goToCollectionButton = collection.length > 0 ? <button className={"white-text direction-button"} onClick={onSelectButtonClick}>{"Go to Collection"}</button> : null;
 
       return (
         <div className="main-container">
@@ -94,7 +97,7 @@ const Home = (props) => {
 
           <div className="buttons">
             <button className={"white-text direction-button"} onClick={onAddButtonClick}>Add New Flash Card</button>
-            <button className={"white-text direction-button"} onClick={onSelectButtonClick}>{"Go to Collection"}</button>
+            {goToCollectionButton}
           </div>
         </div>
       )

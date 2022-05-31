@@ -31,7 +31,7 @@ const App = (props) => {
       <TopBar user={currentUser} />
       <Switch>
         <AuthenticatedRoute exact path="/home" component={Home}></AuthenticatedRoute>
-        <Route exact path="/" component={LandingPage} />
+        <Route exact path="/" component={currentUser === null ? LandingPage : Home} />
         <Route exact path="/users/new" component={RegistrationForm} />
         <Route exact path="/user-sessions/new" component={SignInForm} />
       </Switch>
