@@ -41,7 +41,7 @@ const RandomPersonalFlashcard = ({ currentFlashcard, collection, setCollection }
 
   const handleEasyClick = cardDifficultyClickWrapper(5);
   const handleMediumClick = cardDifficultyClickWrapper(4);
-  const handleHardClick = cardDifficultyClickWrapper(3);
+  const handleHardClick = cardDifficultyClickWrapper(2);
 
   return (
     <div className="collectionCardContainer">
