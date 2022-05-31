@@ -18,7 +18,7 @@ const seedFlashcards = async () => {
     {
       videoURL: "https://www.youtube.com/watch?v=eq8r1ZTma08",
       videoStartTime: 58,
-      videoEndTime: 101
+      videoEndTime: 61
     },
     {
       videoURL: "https://www.youtube.com/watch?v=c8_Ctg_VvD0",
