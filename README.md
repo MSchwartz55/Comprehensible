@@ -12,7 +12,7 @@ Spaced repetition flashcard scheduling is achieved through an implementation of 
 - Shuffle through a list of public video flashcards
 - Add flashcards to the public pool
 - Add flashcards to a personal collection
-- Study their collection using spaced repetition
+- Study your collection using spaced repetition
 
 **Future features:**
 - Tag based filtering system for public/personal flashcards
