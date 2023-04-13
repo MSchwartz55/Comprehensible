@@ -1,6 +1,6 @@
 # Comprehensible
 
-[Demo Site](https://comprehensible.herokuapp.com/home)
+[Demo Site](https://comprehensible.herokuapp.com)
 
 **Comprehensible** is an application for creating and finding video flashcards for studying new languages using comprehensible input
 
